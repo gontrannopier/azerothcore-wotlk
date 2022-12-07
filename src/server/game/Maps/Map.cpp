@@ -235,7 +235,7 @@ void Map::LoadMapAndVMap(int gx, int gy)
 }
 
 Map::Map(uint32 id, uint32 InstanceId, uint8 SpawnMode, Map* _parent) :
-    i_mapEntry(sMapStore.LookupEntry(id)), i_spawnMode(SpawnMode), i_InstanceId(InstanceId),
+    m_id(id), i_mapEntry(sMapStore.LookupEntry(id)), i_spawnMode(SpawnMode), i_InstanceId(InstanceId),
     m_unloadTimer(0), m_VisibleDistance(DEFAULT_VISIBILITY_DISTANCE),
     _instanceResetPeriod(0), m_activeNonPlayersIter(m_activeNonPlayers.end()),
     _transportsUpdateIter(_transports.end()), i_scriptLock(false), _defaultLight(GetDefaultMapLight(id))
@@ -505,6 +505,9 @@ void Map::LoadAllCells()
 
 bool Map::AddPlayerToMap(Player* player)
 {
+    std::cout<< "bool Map::AddPlayerToMap" << std::endl;
+    debugPrint();
+
     CellCoord cellCoord = Acore::ComputeCellCoord(player->GetPositionX(), player->GetPositionY());
     if (!cellCoord.IsCoordValid())
     {
@@ -534,6 +537,29 @@ bool Map::AddPlayerToMap(Player* player)
 
     sScriptMgr->OnPlayerEnterMap(this, player);
     return true;
+}
+
+void Map::debugPrint(int levels) const
+{
+  std::cout << "DEBUG MAP LEVEL" << levels << std::endl;
+  std::cout << "map id" << m_id << std::endl;
+  if (i_mapEntry) {
+    std::cout << "map entry linked_zone" << i_mapEntry->linked_zone << std::endl;
+    std::cout << "map entry name" << i_mapEntry->name << std::endl;
+  }
+  else {
+    std::cout<< "map does not have map entry" << std::endl;
+  }
+
+  if (m_parentMap && levels >= 1) {
+    std::cout << "has PARENT map" << std::endl;
+    std::cout << "PARENT DEBUG PRINT" << std::endl;
+    m_parentMap->debugPrint(levels - 1);
+    std::cout << "PARENT DEBUG PRINT FINISH" << std::endl;
+  }
+  else {
+    std::cout << "map does not have PARENT map" << std::endl;
+  }
 }
 
 template<class T>

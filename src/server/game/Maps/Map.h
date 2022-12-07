@@ -699,6 +699,7 @@ protected:
     std::mutex GridLock;
     std::shared_mutex MMapLock;
 
+    uint32 m_id;
     MapEntry const* i_mapEntry;
     uint8 i_spawnMode;
     uint32 i_InstanceId;
@@ -798,6 +799,8 @@ private:
     std::unordered_set<Corpse*> _corpseBones;
 
     std::unordered_set<Object*> _updateObjects;
+
+  void debugPrint(int levels = 1) const;
 };
 
 enum InstanceResetMethod
