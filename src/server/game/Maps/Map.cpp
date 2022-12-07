@@ -551,7 +551,12 @@ void Map::debugPrint(int levels) const
     std::cout<< "map does not have map entry" << std::endl;
   }
 
-  if (m_parentMap && levels >= 1) {
+  if (m_parentMap //
+      && ( //
+              this != m_parentMap //
+              || levels >= 1 //
+      ) //
+          ) {
     std::cout << "has PARENT map" << std::endl;
     std::cout << "PARENT DEBUG PRINT" << std::endl;
     m_parentMap->debugPrint(levels - 1);
