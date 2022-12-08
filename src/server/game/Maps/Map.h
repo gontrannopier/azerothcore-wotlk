@@ -800,7 +800,7 @@ private:
 
     std::unordered_set<Object*> _updateObjects;
 
-  void debugPrint(int levels = 1) const;
+  void debugPrint() const;
 };
 
 enum InstanceResetMethod

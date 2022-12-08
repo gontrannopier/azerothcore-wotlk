@@ -539,27 +539,27 @@ bool Map::AddPlayerToMap(Player* player)
     return true;
 }
 
-void Map::debugPrint(int levels) const
+void Map::debugPrint() const
 {
-  std::cout << "DEBUG MAP LEVEL" << levels << std::endl;
   std::cout << "map id" << m_id << std::endl;
   if (i_mapEntry) {
     std::cout << "map entry linked_zone" << i_mapEntry->linked_zone << std::endl;
+    std::cout << "map entry entrance_map" << i_mapEntry->entrance_map << std::endl;
+    std::cout << "map entry MapID" << i_mapEntry->MapID << std::endl;
     std::cout << "map entry name" << i_mapEntry->name << std::endl;
   }
   else {
-    std::cout<< "map does not have map entry" << std::endl;
+    std::cout << "map does not have map entry" << std::endl;
   }
 
   if (m_parentMap //
       && ( //
               this != m_parentMap //
-              || levels >= 1 //
       ) //
           ) {
     std::cout << "has PARENT map" << std::endl;
     std::cout << "PARENT DEBUG PRINT" << std::endl;
-    m_parentMap->debugPrint(levels - 1);
+    m_parentMap->debugPrint();
     std::cout << "PARENT DEBUG PRINT FINISH" << std::endl;
   }
   else {
