@@ -84,6 +84,9 @@ namespace VMAP
                 // M2 models don't have a bound set in WDT/ADT placement data, i still think they're not used for LoS at all on retail
                 if (entry->second.flags & MOD_M2)
                 {
+                    if (entry->second.name.starts_with("Winterspring") && entry->second.name.find("Cave") != std::string::npos) {
+                      printf("Calculating model for entry %s...\n", entry->second.name.c_str());
+                    }
                     if (!calculateTransformedBound(entry->second))
                     {
                         break;
